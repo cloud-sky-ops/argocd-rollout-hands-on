@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: realtime-argo-application
+  namespace: realtime-rollout
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/cloudsky13/argocd-rollout-hands-on.git
+    targetRevision: HEAD
+    path: Analysis/templates/
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: realtime-rollout
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true
